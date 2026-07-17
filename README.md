@@ -1,9 +1,8 @@
 # Micropub Server
 
-A local [Micropub](https://micropub.spec.indieweb.org) server that creates posts for
-[notes.keithjgrant.com](https://notes.keithjgrant.com). It writes Eleventy-compatible
-markdown files to the site repo, commits, and pushes so Netlify picks up the change
-automatically.
+A local [Micropub](https://micropub.spec.indieweb.org) server that creates posts for a
+static site. It writes Eleventy-compatible markdown files to a local site repo, commits,
+and pushes so your hosting platform picks up the change automatically.
 
 Zero npm dependencies -- just Node built-ins.
 
@@ -12,9 +11,9 @@ Zero npm dependencies -- just Node built-ins.
 1. You send an HTTP POST to `http://localhost:3456/micropub` (via curl, a Micropub client, etc.)
 2. The server parses the request, determines the post type, and generates a markdown file
    with the correct frontmatter for the Eleventy site
-3. The file is written to `~/self/notes.keithjgrant.com/content/{type}/{YYYY}/{MM}/{slug}.md`
+3. The file is written to `$SITE_DIR/content/{type}/{YYYY}/{MM}/{slug}.md`
 4. The server runs `git add`, `git commit`, and `git push` in the site repo
-5. Netlify detects the push and rebuilds the site
+5. Your hosting platform detects the push and rebuilds the site
 
 ## Supported post types
 
@@ -26,11 +25,12 @@ Zero npm dependencies -- just Node built-ins.
 | Like     | `like-of`            | `content/likes/`     |
 | Repost   | `repost-of`          | `content/notes/`     |
 
-## Usage
+## Setup
 
 ```bash
-# Set your token and start the server
-MICROPUB_TOKEN=your-secret-token npm start
+cp .env.example .env
+# Edit .env with your token, site path, site URL, and syndication targets
+npm start
 ```
 
 ### Post a note
@@ -81,34 +81,37 @@ curl 'http://localhost:3456/micropub?q=config' \
 
 ## Configuration
 
-All config is via environment variables:
+All config is via a `.env` file (or environment variables). Copy `.env.example` to get started.
 
-| Variable         | Default                        | Description           |
-| ---------------- | ------------------------------ | --------------------- |
-| `MICROPUB_TOKEN` | _(required)_                   | Bearer token for auth |
-| `MICROPUB_PORT`  | `3456`                         | Port to listen on     |
-| `SITE_DIR`       | `~/self/notes.keithjgrant.com` | Path to the site repo |
+| Variable         | Default          | Description                                          |
+| ---------------- | ---------------- | ---------------------------------------------------- |
+| `MICROPUB_TOKEN` | _(required)_     | Bearer token for auth                                |
+| `MICROPUB_PORT`  | `3456`           | Port to listen on                                    |
+| `SITE_DIR`       | _(required)_     | Path to the site repo (supports `~`)                 |
+| `SITE_URL`       | _(required)_     | Public URL of the site (for `Location` header)       |
+| `SYNDICATE_TO`   | _(empty)_        | Comma-separated `uid name` pairs (see `.env.example`)|
+
+Environment variables take precedence over `.env` values.
 
 ## Omnibear setup
 
 Since this server uses a simple shared token instead of full IndieAuth, Omnibear
 won't auto-discover the syndication targets. They need to be set manually via the
-browser console on the Omnibear page:
+browser console on any page where Omnibear is active, using your own target UIDs
+and names:
 
 ```js
-storage.set({
-  syndicateTo: [
-    {
-      uid: 'https://front-end.social/@keithjgrant',
-      name: 'Mastodon (front-end.social)',
-    },
-    {
-      uid: 'https://bsky.app/profile/keithjgrant.com',
-      name: 'Bluesky',
-    },
-  ],
-});
+storage.set({syndicateTo: [
+  { uid: 'https://social.example/@you', name: 'Your Social Name' },
+]})
 ```
+
+## Frontmatter format
+
+The generated markdown files use frontmatter conventions for an Eleventy site with
+[Microformats2](http://microformats.org/wiki/microformats2)-style properties
+(`mf-in-reply-to`, `mf-bookmark-of`, etc.). If your site uses a different static
+site generator or different frontmatter fields, edit the builders in `lib/post.mjs`.
 
 ## Project structure
 
