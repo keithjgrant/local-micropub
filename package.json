@@ -5,9 +5,10 @@
   "type": "module",
   "author": "Keith J. Grant <barkeep@keithjgrant.com>",
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "test": "node --test --test-force-exit test/*.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   }
 }
