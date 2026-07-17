@@ -6,5 +6,8 @@
   "author": "Keith J. Grant <barkeep@keithjgrant.com>",
   "scripts": {
     "start": "MICROPUB_TOKEN=abc123 node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
