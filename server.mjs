@@ -23,3 +23,15 @@ server.listen(PORT, () => {
   console.log(`Micropub server listening on http://localhost:${PORT}/micropub`);
   console.log(`Site directory: ${SITE_DIR}`);
 });
+
+function shutdown(signal) {
+  console.log(`\n${signal} received, shutting down...`);
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+  server.closeAllConnections();
+}
+
+process.on('SIGINT', () => shutdown('SIGINT'));
+process.on('SIGTERM', () => shutdown('SIGTERM'));
