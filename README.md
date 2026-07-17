@@ -109,7 +109,7 @@ browser console of the Omnibear authoring page, using your own target UIDs
 and names:
 
 ```js
-storage.set({
+browser.storage.local.set({
   syndicateTo: [
     { uid: 'https://social.example/@you', name: 'Your Social Name' },
   ],
