@@ -83,13 +83,13 @@ curl 'http://localhost:3456/micropub?q=config' \
 
 All config is via a `.env` file (or environment variables). Copy `.env.example` to get started.
 
-| Variable         | Default          | Description                                          |
-| ---------------- | ---------------- | ---------------------------------------------------- |
-| `MICROPUB_TOKEN` | _(required)_     | Bearer token for auth                                |
-| `MICROPUB_PORT`  | `3456`           | Port to listen on                                    |
-| `SITE_DIR`       | _(required)_     | Path to the site repo (supports `~`)                 |
-| `SITE_URL`       | _(required)_     | Public URL of the site (for `Location` header)       |
-| `SYNDICATE_TO`   | _(empty)_        | Comma-separated `uid name` pairs (see `.env.example`)|
+| Variable         | Default      | Description                                           |
+| ---------------- | ------------ | ----------------------------------------------------- |
+| `MICROPUB_TOKEN` | _(required)_ | Bearer token for auth                                 |
+| `MICROPUB_PORT`  | `3456`       | Port to listen on                                     |
+| `SITE_DIR`       | _(required)_ | Path to the site repo (supports `~`)                  |
+| `SITE_URL`       | _(required)_ | Public URL of the site (for `Location` header)        |
+| `SYNDICATE_TO`   | _(empty)_    | Comma-separated `uid name` pairs (see `.env.example`) |
 
 Environment variables take precedence over `.env` values.
 
@@ -97,13 +97,15 @@ Environment variables take precedence over `.env` values.
 
 Since this server uses a simple shared token instead of full IndieAuth, Omnibear
 won't auto-discover the syndication targets. They need to be set manually via the
-browser console on any page where Omnibear is active, using your own target UIDs
+browser console of the Omnibear authoring page, using your own target UIDs
 and names:
 
 ```js
-storage.set({syndicateTo: [
-  { uid: 'https://social.example/@you', name: 'Your Social Name' },
-]})
+storage.set({
+  syndicateTo: [
+    { uid: 'https://social.example/@you', name: 'Your Social Name' },
+  ],
+});
 ```
 
 ## Frontmatter format
