@@ -1,0 +1,10 @@
+{
+  "name": "micropub-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "author": "Keith J. Grant <barkeep@keithjgrant.com>",
+  "scripts": {
+    "start": "MICROPUB_TOKEN=abc123 node server.mjs"
+  }
+}
