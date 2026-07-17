@@ -95,6 +95,14 @@ Environment variables take precedence over `.env` values.
 
 ## Omnibear setup
 
+To configure [Omnibear](https://omnibear.com) to use this server, go to
+Settings > Authentication Details and set the following values:
+
+- Set "Me" to your site's URL.
+- Set "Micropub Endpoint" to `http://localhost:3456/micropub`
+  (replacing the port number if you've configured a different MICROPUB_PORT in .env)
+- Set OAuth token to match the MICROPUB_TOKEN in your .env
+
 Since this server uses a simple shared token instead of full IndieAuth, Omnibear
 won't auto-discover the syndication targets. They need to be set manually via the
 browser console of the Omnibear authoring page, using your own target UIDs
