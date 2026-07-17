@@ -18,13 +18,13 @@ Zero npm dependencies -- just Node built-ins.
 
 ## Supported post types
 
-| Type     | Detected by property | Written to        |
-| -------- | -------------------- | ----------------- |
-| Note     | _(default)_          | `content/notes/`  |
-| Reply    | `in-reply-to`        | `content/replies/` |
+| Type     | Detected by property | Written to           |
+| -------- | -------------------- | -------------------- |
+| Note     | _(default)_          | `content/notes/`     |
+| Reply    | `in-reply-to`        | `content/replies/`   |
 | Bookmark | `bookmark-of`        | `content/bookmarks/` |
-| Like     | `like-of`            | `content/likes/`  |
-| Repost   | `repost-of`          | `content/notes/`  |
+| Like     | `like-of`            | `content/likes/`     |
+| Repost   | `repost-of`          | `content/notes/`     |
 
 ## Usage
 
@@ -83,11 +83,32 @@ curl 'http://localhost:3456/micropub?q=config' \
 
 All config is via environment variables:
 
-| Variable         | Default                              | Description               |
-| ---------------- | ------------------------------------ | ------------------------- |
-| `MICROPUB_TOKEN` | _(required)_                         | Bearer token for auth     |
-| `MICROPUB_PORT`  | `3456`                               | Port to listen on         |
-| `SITE_DIR`       | `~/self/notes.keithjgrant.com`       | Path to the site repo     |
+| Variable         | Default                        | Description           |
+| ---------------- | ------------------------------ | --------------------- |
+| `MICROPUB_TOKEN` | _(required)_                   | Bearer token for auth |
+| `MICROPUB_PORT`  | `3456`                         | Port to listen on     |
+| `SITE_DIR`       | `~/self/notes.keithjgrant.com` | Path to the site repo |
+
+## Omnibear setup
+
+Since this server uses a simple shared token instead of full IndieAuth, Omnibear
+won't auto-discover the syndication targets. They need to be set manually via the
+browser console on the Omnibear page:
+
+```js
+storage.set({
+  syndicateTo: [
+    {
+      uid: 'https://front-end.social/@keithjgrant',
+      name: 'Mastodon (front-end.social)',
+    },
+    {
+      uid: 'https://bsky.app/profile/keithjgrant.com',
+      name: 'Bluesky',
+    },
+  ],
+});
+```
 
 ## Project structure
 
