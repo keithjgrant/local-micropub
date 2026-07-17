@@ -2,8 +2,9 @@
 
 ## Spec compliance
 
-- [ ] Support `action: update` (replace, add, remove properties on existing posts)
-- [ ] Support `action: delete` / `action: undelete`
+- [x] Support `action: update` (replace, add, remove properties on existing posts)
+- [x] Support `action: delete`
+- [ ] Support `action: undelete`
 - [ ] Support `multipart/form-data` requests for photo/file uploads
 - [ ] Store and return `mp-slug` as a recognized command (currently handled, but not documented)
 
