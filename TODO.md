@@ -5,7 +5,6 @@
 - [ ] Support `action: update` (replace, add, remove properties on existing posts)
 - [ ] Support `action: delete` / `action: undelete`
 - [ ] Support `multipart/form-data` requests for photo/file uploads
-- [ ] Support `?q=source` query to return source content of a post
 - [ ] Store and return `mp-slug` as a recognized command (currently handled, but not documented)
 
 ## Nice to have
